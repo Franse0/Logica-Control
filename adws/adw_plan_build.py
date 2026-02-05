@@ -137,8 +137,17 @@ def classify_issue(
     if not issue_response.success:
         return None, issue_response.output
 
-    # Clean up the output - remove markdown backticks and whitespace
-    issue_command = issue_response.output.strip().strip('`')
+    # Clean up the output - extract the command from any explanatory text
+    output_text = issue_response.output.strip().strip('`')
+
+    # Look for /feature, /bug, or /chore in the output
+    import re
+    match = re.search(r'/(feature|bug|chore)', output_text, re.IGNORECASE)
+
+    if not match:
+        return None, f"No valid command found in output: {issue_response.output}"
+
+    issue_command = f"/{match.group(1).lower()}"
 
     if issue_command == "0":
         return None, f"No command selected: {issue_response.output}"
