@@ -255,8 +255,44 @@ def git_branch(
         return None, response.output
 
     branch_name = response.output.strip()
-    logger.info(f"Created branch: {branch_name}")
-    return branch_name, None
+
+    # Create the branch with Git commands
+    logger.info(f"Creating branch: {branch_name}")
+
+    try:
+        # Checkout main and pull latest changes
+        logger.debug("Checking out main branch")
+        subprocess.run(
+            ["git", "checkout", "main"],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        logger.debug("Pulling latest changes from origin/main")
+        subprocess.run(
+            ["git", "pull"],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        # Create and checkout new branch
+        logger.debug(f"Creating new branch: {branch_name}")
+        subprocess.run(
+            ["git", "checkout", "-b", branch_name],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        logger.info(f"Successfully created branch: {branch_name}")
+        return branch_name, None
+
+    except subprocess.CalledProcessError as e:
+        error_msg = f"Failed to create branch: {e.stderr if e.stderr else str(e)}"
+        logger.error(error_msg)
+        return None, error_msg
 
 
 def git_commit(
