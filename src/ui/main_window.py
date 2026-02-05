@@ -66,3 +66,44 @@ class MainWindow(tk.Tk):
             bg="#f0f0f0"
         )
         subtitle_label.pack(pady=(0, 20))
+
+        # Frame contenedor para el formulario de login
+        login_frame = tk.Frame(self, bg="#f0f0f0")
+        login_frame.pack(pady=40)
+
+        # Campo de usuario
+        username_label = tk.Label(
+            login_frame,
+            text="Usuario:",
+            font=("Arial", 14),
+            bg="#f0f0f0"
+        )
+        username_label.pack(pady=(0, 5))
+
+        self.username_entry = tk.Entry(login_frame, width=30, font=("Arial", 12))
+        self.username_entry.pack(pady=(0, 15))
+
+        # Campo de contraseña
+        password_label = tk.Label(
+            login_frame,
+            text="Contraseña:",
+            font=("Arial", 14),
+            bg="#f0f0f0"
+        )
+        password_label.pack(pady=(0, 5))
+
+        self.password_entry = tk.Entry(login_frame, width=30, font=("Arial", 12), show="*")
+        self.password_entry.pack(pady=(0, 20))
+
+        # Botón de inicio de sesión
+        login_button = tk.Button(
+            login_frame,
+            text="Iniciar Sesión",
+            font=("Arial", 14, "bold"),
+            bg="#3498db",
+            fg="white",
+            padx=40,
+            pady=10,
+            command=lambda: None  # Placeholder sin funcionalidad
+        )
+        login_button.pack(pady=(10, 0))
