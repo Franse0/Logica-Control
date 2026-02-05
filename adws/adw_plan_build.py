@@ -254,7 +254,8 @@ def git_branch(
     if not response.success:
         return None, response.output
 
-    branch_name = response.output.strip()
+    # Clean up the output - remove markdown backticks and whitespace
+    branch_name = response.output.strip().strip('`')
 
     # Create the branch with Git commands
     logger.info(f"Creating branch: {branch_name}")
