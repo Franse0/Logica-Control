@@ -137,7 +137,8 @@ def classify_issue(
     if not issue_response.success:
         return None, issue_response.output
 
-    issue_command = issue_response.output.strip()
+    # Clean up the output - remove markdown backticks and whitespace
+    issue_command = issue_response.output.strip().strip('`')
 
     if issue_command == "0":
         return None, f"No command selected: {issue_response.output}"
