@@ -7,6 +7,7 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from ui.main_window import MainWindow
 
 # Load environment variables
 load_dotenv()
@@ -25,10 +26,13 @@ def main():
     print("Inicializando...")
 
     # TODO: Initialize database
-    # TODO: Initialize UI
     # TODO: Initialize fingerprint reader
 
     print("✅ Sistema listo")
+
+    # Iniciar interfaz gráfica
+    app = MainWindow()
+    app.mainloop()
 
 
 if __name__ == "__main__":
