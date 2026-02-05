@@ -325,8 +325,35 @@ def git_commit(
         return None, response.output
 
     commit_message = response.output.strip()
-    logger.info(f"Created commit: {commit_message}")
-    return commit_message, None
+    logger.info(f"Generated commit message: {commit_message}")
+
+    # Execute the git commit
+    try:
+        # Stage all changes
+        logger.debug("Staging changes with git add")
+        subprocess.run(
+            ["git", "add", "-A"],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        # Create commit with the generated message
+        logger.debug(f"Creating commit with message: {commit_message}")
+        subprocess.run(
+            ["git", "commit", "-m", commit_message],
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        logger.info(f"Successfully created commit: {commit_message}")
+        return commit_message, None
+
+    except subprocess.CalledProcessError as e:
+        error_msg = f"Failed to commit: {e.stderr if e.stderr else str(e)}"
+        logger.error(error_msg)
+        return None, error_msg
 
 
 def pull_request(
