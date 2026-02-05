@@ -1,0 +1,11 @@
+# Core dependencies
+pydantic>=2.0.0
+python-dotenv>=1.0.0
+
+# ADW dependencies (already installed)
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# Future dependencies (uncomment when needed)
+# Pillow>=10.0.0              # For images/photos
+# pyserial>=3.5               # For relay control
